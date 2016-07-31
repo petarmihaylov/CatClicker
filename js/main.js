@@ -1,4 +1,4 @@
-//$("#numberOfCatClicks").prop('disabled', true);
+$("#numberOfCatClicksCat1").prop('disabled', true);
 
 $( function() {
   var cat1Name = 'Kuddlez';
