@@ -3,11 +3,7 @@
 
 # TEAM
 
-    <name> -- <role> -- <twitter>
-
-# THANKS
-
-    <name>
+    Petar Mihaylov -- Design and Development
 
 # TECHNOLOGY COLOPHON
 

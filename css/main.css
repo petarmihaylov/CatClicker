@@ -3,20 +3,27 @@
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+label {
+ font-size: 2em;
+ font-weight: 800;
+}
 
+img {
+ width: 500px;
+ height: 341px;
+}
 
+h1, h3 {
+  font-weight: 800;
+}
 
+.jumbotron {
+  padding-top: 0px;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+.clickCounter {
+  height: 120px;
+  width: 150px;
+  font-weight: 800;
+  font-size: 5em;
+}
