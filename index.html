@@ -30,20 +30,31 @@
         <![endif]-->
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron text-center">
-      <h1>Cat Clicker</h1>
+    <div class="container">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-2 middle">
+          <div class="outer">
+            <div class="middle">
+              <div class="inner">
+                <h2>Pick a Cat</h3>
+                <!-- List of Cats built with JavaScript -->
+                <ul id="cats"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-10">
           <div class="container text-center">
+            <h1>Cat Clicker</h1>
             <!-- Cat name added by JavaScript -->
             <h3 id="catName"></h3>
             <!-- src and alt tags added by javascript-->
             <img id="catImage" class="center-block img-rounded">
           </div>
-          <div class="col-md-4 col-md-offset-4">
+          <div class="col-md-5 col-md-offset-5">
             <div class="form-group text-center">
-              <label for="numberOfCatClicksCat">Cat Clicks</label>
-              <input type="text" id="numberOfCatClicksCat" class="clickCounter form-control text-center center-block" value='0'>
+              <label for="numberOfCatClicks">Cat Clicks</label>
+              <input type="text" id="numberOfCatClicks" class="clickCounter form-control text-center center-block" value='0'>
             </div>
           </div>
         </div>
