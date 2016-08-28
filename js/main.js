@@ -10,7 +10,6 @@ $( function() {
     init: function() {
       var settings = [
         {
-          firstRun: true,
           lastCatByArrayId: null
         }
       ];
@@ -90,7 +89,6 @@ $( function() {
           settings[key] = value;
         });
       }
-      console.log(settings);
       return settings;
     }
   } // END: model
@@ -102,7 +100,6 @@ $( function() {
   **********************************/
   var viewMenu = {
     init: function() {
-      this.cats = $('#cats');
       viewMenu.render();
     },
 
@@ -129,7 +126,6 @@ $( function() {
   var viewCatViewer = {
     initFirstRun: function () {
       var cat = octopus.getRandomCat();
-      //console.log(cat); //This works
       viewCatViewer.render(cat);
     },
 
@@ -140,9 +136,7 @@ $( function() {
 
     // Adds onClick functions to all cat images - when in shouldn't!
     bootstrap: function(cat) {
-      console.log(cat);
       var catID = '#catImage-' + cat.id;
-      console.log(catID);
       $(document).on('click', catID, function(clickEvent){
         octopus.updateClickCount(cat);
       });
@@ -172,12 +166,8 @@ $( function() {
       model.init();
       viewMenu.init();
       var settings = octopus.getSettings();
-      if (settings.firstRun) {
-        // Load this as the first run to get a random cat
+      if (settings.lastCatByArrayId === null) {
         viewCatViewer.initFirstRun();
-        // Update the settings to indicate the aplication has been run before
-        settings.firstRun = false;
-        localStorage.settings = JSON.stringify(settings);
       } else {
         var catId = settings.lastCatByArrayId;
         var cat = this.getCatById(catId);
