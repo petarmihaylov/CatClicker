@@ -139,15 +139,13 @@ $( function() {
     },
 
     // Adds onClick functions to all cat images - when in shouldn't!
-    bootstrap: function() {
-      var cats = octopus.getCats();
-      for (var i = 0; i < cats.length; i++) {
-        $('#catImage-' + cats[i].id).on('click', (function(cat) {
-          return function() {
-            octopus.updateClickCount(cat);
-          };
-        })(cats[i]));
-      }
+    bootstrap: function(cat) {
+      console.log(cat);
+      var catID = '#catImage-' + cat.id;
+      console.log(catID);
+      $(document).on('click', catID, function(clickEvent){
+        octopus.updateClickCount(cat);
+      });
     },
 
     render: function(cat) {
@@ -156,7 +154,7 @@ $( function() {
       catImage.attr('src', cat.img);
       catImage.attr('alt', cat.alt);
       catImage.attr('id', 'catImage-' + cat.id);
-      viewCatViewer.bootstrap();
+      viewCatViewer.bootstrap(cat);
       octopus.updateLastCatViewed(cat);
     }
   };
@@ -226,6 +224,7 @@ $( function() {
 
     updateClickCount: function(cat) {
       // do stuff to update the click count
+      console.log("The cat alert is displayed!");
       alert(cat.name);
     },
 
