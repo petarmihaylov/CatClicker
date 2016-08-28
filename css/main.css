@@ -11,6 +11,7 @@ label {
 img {
  width: 500px;
  height: 341px;
+ cursor: pointer;
 }
 
 h1 {
