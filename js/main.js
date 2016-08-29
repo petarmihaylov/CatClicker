@@ -143,11 +143,13 @@ $( function() {
     },
 
     render: function(cat) {
+      console.log('Rendering cat');
       var catImage = $('.catImage');
       $('#catName').text(cat.name);
       catImage.attr('src', cat.img);
       catImage.attr('alt', cat.alt);
       catImage.attr('id', 'catImage-' + cat.id);
+      $('#numberOfCatClicks').val(cat.clicks);
       viewCatViewer.bootstrap(cat);
       octopus.updateLastCatViewed(cat);
     }
@@ -209,13 +211,21 @@ $( function() {
     },
 
     showCat: function(cat) {
-      viewCatViewer.render(cat);
+      var currCat = octopus.getCatById(cat.id);
+      viewCatViewer.render(currCat);
     },
 
     updateClickCount: function(cat) {
       // do stuff to update the click count
-      console.log("The cat alert is displayed!");
-      alert(cat.name);
+      var cats = octopus.getCats();
+      var catsLength = cats.length;
+      for (var i=0; i < catsLength; i++) {
+        if (cats[i].id == cat.id) {
+          cats[i].clicks++;
+          $('#numberOfCatClicks').val(cats[i].clicks);
+          localStorage.cats = JSON.stringify(cats);
+        }
+      }
     },
 
     updateLastCatViewed: function(cat) {
@@ -230,31 +240,5 @@ $( function() {
   ****************************/
 
   octopus.init();
-
-
-
-
-
-  // // Pick a random currentCat to display at program start
-  //
-  //
-  // // Add the cat names to the page
-  // for (var i = 0, name, firstLetter, capitalized, arraylength = cats.length; i < arraylength; i++) {
-  //       name = cats[i].name;
-  //
-  //       $('#' + name).on('click', (function(currentCat) {
-  //         return function() {
-  //           $('#catName').text(currentCat.name);
-  //           $('#catImage').attr('src', currentCat.img);
-  //           $('#catImage').attr('alt', currentCat.alt);
-  //           catCounter.val(parseInt(currentCat.clicks));
-  //         };
-  //       })(cats[i]));
-  // };
-
-
-
-
-
 
 });
