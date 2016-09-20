@@ -105,7 +105,6 @@ $( function() {
 
     render: function() {
       var cats = octopus.getCats();
-      //console.log(cats); //This works
       // Iterate over the cats so that they all get an on-click property to load the cat that was clicked
       for (var i = 0; i < cats.length; i++) {
         $('#cats').append('<li><h3  id="' + 'cat-' + cats[i].id + '">' + cats[i].name + '</h3></li>');
@@ -127,31 +126,30 @@ $( function() {
     initFirstRun: function () {
       var cat = octopus.getRandomCat();
       viewCatViewer.render(cat);
-      viewCatViewer.bootstrap(cat);
+      viewCatViewer.bootstrap();
     },
 
     init: function() {
       var cat = octopus.getLastCatViewed();
       viewCatViewer.render(cat);
-      viewCatViewer.bootstrap(cat);
+      viewCatViewer.bootstrap();
     },
 
-    // Adds onClick functions to all cat images - when in shouldn't!
-    bootstrap: function(cat) {
+    // Adds onClick functions to all cat images!
+    bootstrap: function() {
       var cats = octopus.getCats();
-      console.log(cats);
       for (var cat = 0; cat < cats.length; cat++) {
         var catID = '#catImage-' + cats[cat].id;
-        $(catID).on('click', (function(cat) {
+        $(catID).on('click', (function() {
           return function(){
-            octopus.updateClickCount(cat);
+            octopus.updateClickCount();
           };
         })(cats[cat]));
       }
     },
 
     render: function(cat) {
-      console.log('Rendering cat');
+      //console.log('Rendering cat');
       var catImage = $('.catImage');
       $('#catName').text(cat.name);
       catImage.attr('src', cat.img);
@@ -159,17 +157,6 @@ $( function() {
       catImage.attr('id', 'catImage-' + cat.id);
       $('#numberOfCatClicks').val(cat.clicks);
       octopus.updateLastCatViewed(cat);
-      // Wire all the cats with an on-click method
-
-
-      // for (var i = 0; i < cats.length; i++) {
-      //   $('#cats').append('<li><h3  id="' + 'cat-' + cats[i].id + '">' + cats[i].name + '</h3></li>');
-      //   $('#cat-' + cats[i].id).on('click', (function(cat) {
-      //     return function(){
-      //       octopus.showCat(cat);
-      //     };
-      //   })(cats[i]));
-      // }
     }
   };
 
@@ -189,8 +176,6 @@ $( function() {
       if (settings.lastCatByArrayId === null) {
         viewCatViewer.initFirstRun();
       } else {
-        //var catId = settings.lastCatByArrayId;
-        //var cat = this.getCatById(catId);
         // Load the regular init so that the last cat viewed shows up
         viewCatViewer.init();
       }
@@ -233,12 +218,12 @@ $( function() {
       viewCatViewer.render(currCat);
     },
 
-    updateClickCount: function(cat) {
-      // do stuff to update the click count
+    updateClickCount: function() {
+      var clickedCat = octopus.getLastCatViewed();
       var cats = octopus.getCats();
       var catsLength = cats.length;
       for (var i=0; i < catsLength; i++) {
-        if (cats[i].id == cat.id) {
+        if (cats[i].id == clickedCat.id) {
           cats[i].clicks++;
           $('#numberOfCatClicks').val(cats[i].clicks);
           localStorage.cats = JSON.stringify(cats);
