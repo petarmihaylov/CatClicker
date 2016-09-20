@@ -127,19 +127,27 @@ $( function() {
     initFirstRun: function () {
       var cat = octopus.getRandomCat();
       viewCatViewer.render(cat);
+      viewCatViewer.bootstrap(cat);
     },
 
     init: function() {
       var cat = octopus.getLastCatViewed();
       viewCatViewer.render(cat);
+      viewCatViewer.bootstrap(cat);
     },
 
     // Adds onClick functions to all cat images - when in shouldn't!
     bootstrap: function(cat) {
-      var catID = '#catImage-' + cat.id;
-      $(document).on('click', catID, function(clickEvent){
-        octopus.updateClickCount(cat);
-      });
+      var cats = octopus.getCats();
+      console.log(cats);
+      for (var cat = 0; cat < cats.length; cat++) {
+        var catID = '#catImage-' + cats[cat].id;
+        $(catID).on('click', (function(cat) {
+          return function(){
+            octopus.updateClickCount(cat);
+          };
+        })(cats[cat]));
+      }
     },
 
     render: function(cat) {
@@ -150,8 +158,18 @@ $( function() {
       catImage.attr('alt', cat.alt);
       catImage.attr('id', 'catImage-' + cat.id);
       $('#numberOfCatClicks').val(cat.clicks);
-      viewCatViewer.bootstrap(cat);
       octopus.updateLastCatViewed(cat);
+      // Wire all the cats with an on-click method
+
+
+      // for (var i = 0; i < cats.length; i++) {
+      //   $('#cats').append('<li><h3  id="' + 'cat-' + cats[i].id + '">' + cats[i].name + '</h3></li>');
+      //   $('#cat-' + cats[i].id).on('click', (function(cat) {
+      //     return function(){
+      //       octopus.showCat(cat);
+      //     };
+      //   })(cats[i]));
+      // }
     }
   };
 
@@ -171,8 +189,8 @@ $( function() {
       if (settings.lastCatByArrayId === null) {
         viewCatViewer.initFirstRun();
       } else {
-        var catId = settings.lastCatByArrayId;
-        var cat = this.getCatById(catId);
+        //var catId = settings.lastCatByArrayId;
+        //var cat = this.getCatById(catId);
         // Load the regular init so that the last cat viewed shows up
         viewCatViewer.init();
       }
