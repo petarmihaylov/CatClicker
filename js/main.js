@@ -253,8 +253,6 @@ $( function() {
     updateSettingsLastCatViewed: function(cat) {
       var settings = octopus.getSettings();
       settings.lastCatByArrayId = cat.id;
-      // TODO: Remove this line on the next commit - deprecated
-      settings.firstRun = false;
       localStorage.settings = JSON.stringify(settings);
     },
 
