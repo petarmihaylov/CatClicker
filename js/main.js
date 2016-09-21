@@ -8,14 +8,12 @@ $( function() {
 
   var model = {
     init: function() {
-      var settings = [
-        {
+      var settings = {
           lastCatByArrayId: null,
           // It will be changed to false later
           // Setting initially to true for testing
           inAdminMode: true
         }
-      ];
 
       var cats = [
         {
@@ -64,14 +62,10 @@ $( function() {
           localStorage.cats = JSON.stringify(data);
         }
       }
+
       // Creates the local storage for the settings
       if (!localStorage.settings) {
-        localStorage.settings = JSON.stringify([]);
-        for (var i = 0; i< settings.length; i++) {
-          var data = JSON.parse(localStorage.settings);
-          data.push(settings[i]);
-          localStorage.settings = JSON.stringify(data);
-        }
+        localStorage.setItem('settings', JSON.stringify(settings));
       }
     }, // END: init
 
@@ -85,13 +79,7 @@ $( function() {
     },
 
     getSettings: function() {
-      var settings = {};
-      var data = JSON.parse(localStorage.settings);
-      for (var i = 0; i < data.length; i++) {
-        $.each(data[i], function(key, value) {
-          settings[key] = value;
-        });
-      }
+      var settings = JSON.parse(localStorage.getItem('settings'));
       return settings;
     }
   } // END: model
@@ -174,6 +162,13 @@ $( function() {
       // Update Clicks
       viewCatViewer.renderClicks($('#numberOfCatClicks'), cat.clicks);
       octopus.updateSettingsLastCatViewed(cat);
+
+      // Render the info in the admin section - if the setting is currnety true
+      var settings = octopus.getSettings();
+      //console.log(settings);
+      if (settings.inAdminMode === true) {
+        $('admin-cat-name').val(cat.name);
+      }
     },
 
     // Renders the name an/or clicks for a cat on update
@@ -279,7 +274,7 @@ $( function() {
 
   /******* END: OCTOPUS *******
   ****************************/
-
+  // Make everything go
   octopus.init();
 
 });
