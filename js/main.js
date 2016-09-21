@@ -192,12 +192,12 @@ $( function() {
       // Render the info in the admin section - if the setting is currnety true
       var settings = octopus.getSettings();
       if (settings.inAdminMode === true) {
-        $('.cat-info').css({ display: 'block'});
+        $('.cat-info').show('blind');
         $('#admin-cat-name').val(cat.name);
         $('#admin-cat-image-url').val(cat.img);
         $('#admin-cat-number-of-clicks').val(cat.clicks);
       } else {
-        $('.cat-info').css({ display: 'none'});
+        $('.cat-info').hide('blind');
       }
     },
 
