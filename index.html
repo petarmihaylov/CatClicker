@@ -20,7 +20,7 @@
         </style>
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="css/jquery-1.12.0-ui.css">
 
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     </head>
@@ -31,33 +31,44 @@
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="container">
+      <div class="row text-center">
+        <div class="col-md-9 col-md-offset-3 col-sm-12">
+          <h1>Cat Clicker</h1>
+        </div>
+      </div>
       <div class="row">
-        <div class="col-md-2 middle">
-          <div class="outer">
-            <div class="middle">
-              <div class="inner">
-                <h2>Pick a Cat</h3>
-                <!-- List of Cats built with JavaScript -->
-                <ul id="cats"></ul>
-              </div>
+        <!-- First Column -->
+        <div class="col-md-3 col-sm-12 col-sm-center">
+          <div class="row">
+            <div class="col-md-12">
+              <h2 class="menu-title">Pick a Cat</h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <!-- List of Cats built with JavaScript -->
+              <ul id="cats" class="cats-list"></ul>
             </div>
           </div>
         </div>
-        <div class="col-md-10">
-          <div class="container text-center">
-            <h1>Cat Clicker</h1>
+        <!-- Second Column -->
+        <div class="col-md-9 col-sm-12 text-center">
+          <div class="row">
             <!-- Cat name added by JavaScript -->
             <h3 id="catName"></h3>
+          </div>
+          <div class="row">
             <!-- src and alt tags added by javascript-->
             <!-- id attribute of the img tag is added by JavaScript-->
             <img class="catImage center img-rounded">
           </div>
-          <div class="col-md-5 col-md-offset-5">
-            <div class="form-group text-center">
+          <div class="row">
+            <div class="form-group">
               <label for="numberOfCatClicks">Cat Clicks</label>
-              <input type="text" id="numberOfCatClicks" class="clickCounter form-control text-center center-block" value='0'>
+              <input type="text" id="numberOfCatClicks" class="clickCounter form-control text-center center-block" value=''>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </div>
@@ -69,9 +80,11 @@
       <footer>
         <p>&copy; Petar Mihaylov 2016</p>
       </footer>
-    </div> <!-- /container -->        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+    </div> <!-- /container -->
+        <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.4.min.js"><\/script>')</script>
 
+        <script src="js/vendor/jquery.animate-colors.js"></script>
         <script src="js/vendor/bootstrap.min.js"></script>
 
         <script src="js/plugins.js"></script>

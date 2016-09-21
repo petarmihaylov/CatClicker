@@ -107,7 +107,7 @@ $( function() {
       var cats = octopus.getCats();
       // Iterate over the cats so that they all get an on-click property to load the cat that was clicked
       for (var i = 0; i < cats.length; i++) {
-        $('#cats').append('<li><h3  id="' + 'cat-' + cats[i].id + '">' + cats[i].name + '</h3></li>');
+        $('#cats').append('<li><h2  id="' + 'cat-' + cats[i].id + '">' + cats[i].name + '</h2></li>');
         $('#cat-' + cats[i].id).on('click', (function(cat) {
           return function(){
             octopus.showCat(cat);
@@ -151,12 +151,22 @@ $( function() {
     render: function(cat) {
       //console.log('Rendering cat');
       var catImage = $('.catImage');
+      // Ads some style to the update so it's not so jarring
+      $('#catName').css({ color: '#fff' });
+      $('#catName').animate({ color: '#333' }, 200);
       $('#catName').text(cat.name);
       catImage.attr('src', cat.img);
       catImage.attr('alt', cat.alt);
       catImage.attr('id', 'catImage-' + cat.id);
-      $('#numberOfCatClicks').val(cat.clicks);
+      viewCatViewer.renderClicks($('#numberOfCatClicks'), cat.clicks);
       octopus.updateLastCatViewed(cat);
+    },
+
+    // Renders the name an/or clicks for a cat on update
+    renderClicks: function(element, clicks) {
+      element.css({ color: '#eee' });
+      element.animate({ color: '#555' }, 200);
+      element.val(clicks);
     }
   };
 
@@ -224,8 +234,13 @@ $( function() {
       var catsLength = cats.length;
       for (var i=0; i < catsLength; i++) {
         if (cats[i].id == clickedCat.id) {
-          cats[i].clicks++;
-          $('#numberOfCatClicks').val(cats[i].clicks);
+          // ++ in front of the variable means that the addition will be
+          // performed first and the resulting value will be assinged to clicks
+          // ++ after the variable mens the CURRENT value of the variable will
+          // be assigned to clicks and then 1 will be added to the variable
+          var clicks = ++cats[i].clicks;
+          viewCatViewer.renderClicks($('#numberOfCatClicks'), clicks);
+
           localStorage.cats = JSON.stringify(cats);
         }
       }
