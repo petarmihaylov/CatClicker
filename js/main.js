@@ -137,6 +137,32 @@ $( function() {
           };
         })(cats[cat]));
       }
+
+      // Add event listeners to the Admin, Cancel, and Save buttons
+      // Admin button
+      $('#admin-button-admin').on('click', (function() {
+        return function(){
+          octopus.updateSettingsInAdminMode();
+          viewCatViewer.render(octopus.getLastCatViewed());
+        };
+      })($('#admin-button-admin')));
+
+      // Cancel button
+      $('#admin-button-cancel').on('click', (function() {
+        return function(){
+          octopus.updateSettingsInAdminMode();
+          viewCatViewer.render(octopus.getLastCatViewed());
+        };
+      })($('#admin-button-cancel')));
+
+      // Save button
+      $('#admin-button-save').on('click', (function() {
+        return function(){
+          octopus.updateCatInfoViaAdmin();
+          octopus.updateSettingsInAdminMode();
+          viewCatViewer.render(octopus.getLastCatViewed());
+        };
+      })($('#admin-button-save')));
     },
 
     render: function(cat) {
@@ -165,9 +191,13 @@ $( function() {
 
       // Render the info in the admin section - if the setting is currnety true
       var settings = octopus.getSettings();
-      //console.log(settings);
       if (settings.inAdminMode === true) {
-        $('admin-cat-name').val(cat.name);
+        $('.cat-info').css({ display: 'block'});
+        $('#admin-cat-name').val(cat.name);
+        $('#admin-cat-image-url').val(cat.img);
+        $('#admin-cat-number-of-clicks').val(cat.clicks);
+      } else {
+        $('.cat-info').css({ display: 'none'});
       }
     },
 
@@ -176,6 +206,7 @@ $( function() {
       element.css({ color: '#eee' });
       element.animate({ color: '#555' }, 200);
       element.val(clicks);
+      $('#admin-cat-number-of-clicks').val(clicks);
       // element.css({ color: '#eee' });
       // element.animate({ color: '#555' }, 200);
       // element.val(clicks);
@@ -258,6 +289,20 @@ $( function() {
       }
     },
 
+    updateCatInfoViaAdmin: function() {
+      var clickedCat = octopus.getLastCatViewed();
+      var cats = octopus.getCats();
+      var catsLength = cats.length;
+      for (var i=0; i < catsLength; i++) {
+        if (cats[i].id == clickedCat.id) {
+          cats[i].name = $('#admin-cat-name').val();
+          cats[i].img = $('#admin-cat-image-url').val();
+          cats[i].clicks = $('#admin-cat-number-of-clicks').val();
+          localStorage.cats = JSON.stringify(cats);
+        }
+      }
+    },
+
     updateSettingsLastCatViewed: function(cat) {
       var settings = octopus.getSettings();
       settings.lastCatByArrayId = cat.id;
@@ -265,9 +310,13 @@ $( function() {
     },
 
     // Takes a bookean for the value
-    updateSettingsInAdminMode: function(bool) {
+    updateSettingsInAdminMode: function() {
       var settings = octopus.getSettings();
-      settings.inAdminMode = bool;
+      if (settings.inAdminMode === true) {
+        settings.inAdminMode = false;
+      } else {
+        settings.inAdminMode = true;
+      }
       localStorage.settings = JSON.stringify(settings)
     }
   };
