@@ -10,7 +10,10 @@ $( function() {
     init: function() {
       var settings = [
         {
-          lastCatByArrayId: null
+          lastCatByArrayId: null,
+          // It will be changed to false later
+          // Setting initially to true for testing
+          inAdminMode: true
         }
       ];
 
@@ -155,11 +158,12 @@ $( function() {
       $('#catName').css({ color: '#fff' });
       $('#catName').animate({ color: '#333' }, 200);
       $('#catName').text(cat.name);
+      // TODO: Add a the fade-out and fade-in effect on the cat image as well
       catImage.attr('src', cat.img);
       catImage.attr('alt', cat.alt);
       catImage.attr('id', 'catImage-' + cat.id);
       viewCatViewer.renderClicks($('#numberOfCatClicks'), cat.clicks);
-      octopus.updateLastCatViewed(cat);
+      octopus.updateSettingsLastCatViewed(cat);
     },
 
     // Renders the name an/or clicks for a cat on update
@@ -246,11 +250,19 @@ $( function() {
       }
     },
 
-    updateLastCatViewed: function(cat) {
+    updateSettingsLastCatViewed: function(cat) {
       var settings = octopus.getSettings();
       settings.lastCatByArrayId = cat.id;
+      // TODO: Remove this line on the next commit - deprecated
       settings.firstRun = false;
       localStorage.settings = JSON.stringify(settings);
+    },
+
+    // Takes a bookean for the value
+    updateSettingsInAdminMode: function(bool) {
+      var settings = octopus.getSettings();
+      settings.inAdminMode = bool;
+      localStorage.settings = JSON.stringify(settings)
     }
   };
 
