@@ -152,16 +152,26 @@ $( function() {
     },
 
     render: function(cat) {
-      //console.log('Rendering cat');
       var catImage = $('.catImage');
-      // Ads some style to the update so it's not so jarring
-      $('#catName').css({ color: '#fff' });
-      $('#catName').animate({ color: '#333' }, 200);
-      $('#catName').text(cat.name);
-      // TODO: Add a the fade-out and fade-in effect on the cat image as well
-      catImage.attr('src', cat.img);
+      var catName = $('#catName');
+
+      // Udpate Cat Name
+      catName.fadeOut(200, function() {
+        catName.text(cat.name);
+      });
+      catName.fadeIn(200);
+
+      // Update Cat Image
+      catImage.fadeOut(200, function(){
+        catImage.attr('src', cat.img);
+      });
+      catImage.fadeIn(200);
+
+      //catImage.attr('src', cat.img);
       catImage.attr('alt', cat.alt);
       catImage.attr('id', 'catImage-' + cat.id);
+
+      // Update Clicks
       viewCatViewer.renderClicks($('#numberOfCatClicks'), cat.clicks);
       octopus.updateSettingsLastCatViewed(cat);
     },
@@ -171,6 +181,9 @@ $( function() {
       element.css({ color: '#eee' });
       element.animate({ color: '#555' }, 200);
       element.val(clicks);
+      // element.css({ color: '#eee' });
+      // element.animate({ color: '#555' }, 200);
+      // element.val(clicks);
     }
   };
 
